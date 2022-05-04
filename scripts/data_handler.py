@@ -1,21 +1,38 @@
 # Libraries
 import json
+import pandas as pd
 from os.path import exists
 
 # External Scripts
 from components import Student
-
 
 student = Student('Nicolas', 'Gatien', '+13439985454')
 path = f'students/{student.first_name}_{student.last_name}.json'
 
 global_variables = json.load(open('scripts\global_variables.json'))
 
+def build_sheet_url(doc_id, sheet_id):
+    return f'https://docs.google.com/spreadsheets/d/{doc_id}/export?format=csv&gid={sheet_id}'
+
+def write_df_to_local(df, file_path):
+    df.to_csv(file_path)
+
+doc_id = '1yI5kt3E-nkFA2-juvulEkFuWxpQ-BuFHURGqTunkc-E'
+sheet_id = '1090354940'
+sheet_url = build_sheet_url(doc_id, sheet_id)
+df = pd.read_csv(sheet_url)
+file_path = 'scripts\data.csv'
+write_df_to_local(df, file_path)
+
+
 def Increase_Number_Of_Students():
+    # Increase Variable
     global_variables['number_of_students'] += 1
     
+    # Create JSON Object With Modified Values
     global_variables_json = json.dumps(global_variables)
 
+    # Modify The File
     with open('scripts\global_variables.json', 'w') as outfile:
         outfile.write(global_variables_json)
 
@@ -51,7 +68,7 @@ def Create_JSON_File_For_Student():
         # Debug
         print(f"📰 Create File For {student.first_name} {student.last_name}")
 
-
+# Script
 Create_JSON_File_For_Student()
 
 # Up Module By 1
