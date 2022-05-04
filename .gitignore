@@ -1,2 +1,2 @@
-
-scripts/keys.py
+keys/twilio_keys.py
+keys/google_keys.json

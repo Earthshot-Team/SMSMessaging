@@ -1,13 +1,15 @@
+# Libraries
 from twilio.rest import Client
-import keys
+
+# Other Scripts
+import keys.twilio_keys as keys
 from student import Student
 
 client = Client(keys.account_sid, keys.auth_token) # Twilio Client
-students = [Student('Nicolas', '+13439985454'), Student('Mom', '+16134004208')] # Student List
+students = [Student('Nicolas', 'Gatien', '+13439985454')] # Student List
 
 # Loop Through Each Student In List
-for student_index in range(len(students)):
-    student = students[student_index]
+for student in students:
 
     # Construct Message
     message = client.messages.create(
