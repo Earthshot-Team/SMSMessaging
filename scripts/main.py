@@ -3,7 +3,7 @@ from twilio.rest import Client
 
 # Other Scripts
 import keys.twilio_keys as keys
-from student import Student
+from components import Student
 
 client = Client(keys.account_sid, keys.auth_token) # Twilio Client
 students = [Student('Nicolas', 'Gatien', '+13439985454')] # Student List
