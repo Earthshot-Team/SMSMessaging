@@ -3,9 +3,29 @@ import json
 import pandas as pd
 from os.path import exists
 from csv import DictReader
+import re
 
 # External Scripts
 global_variables = json.load(open('data\global_variables.json'))
+
+def Format_Phone_Number(phone_number):
+    # Examples
+    # +1 613 822 9592   ->   +16138229592
+    # +1 (613) 822 9592 ->   +16138229592
+    # (+1) 6138229592   ->   +16138229592
+    # +1-613-822-9592   ->   +16138229592
+
+    # Remove Uncessessary Spaces
+    formatted_number = re.sub(r"\s+", "", phone_number, flags=re.UNICODE)
+
+    # Add a + at Beginning
+    first_character = formatted_number[0]
+
+    if(first_character != '+'):
+        formatted_number = '+' + formatted_number
+
+    # Return Phone Number
+    return formatted_number
 
 def Build_Sheet_URL(doc_id, sheet_id):
     # Construct a Google Sheet URL so Pandas can Access Data
@@ -47,7 +67,7 @@ def Increase_Number_Of_Students():
     global_variables_json = json.dumps(global_variables)
 
     # Modify The File
-    with open('scripts\global_variables.json', 'w') as outfile:
+    with open('data\global_variables.json', 'w') as outfile:
         outfile.write(global_variables_json)
 
 def Create_JSON_File_For_Student(first_name, last_name, phone_number):
@@ -59,7 +79,7 @@ def Create_JSON_File_For_Student(first_name, last_name, phone_number):
         "ID": global_variables['number_of_students'],
         "first_name": first_name,
         "last_name": last_name,
-        "phone_number": phone_number,
+        "phone_number": Format_Phone_Number(phone_number),
         "region_code": "+41",
         "module": 1,
         "progress": 0

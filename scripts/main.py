@@ -13,7 +13,7 @@ data_handler.Download_Student_Data()
 data_handler.Export_Student_Data_In_JSON()
 
 # Loop Through Each Student In List
-for student in students:
+'''for student in students:
 
     # Construct Message
     message = client.messages.create(
@@ -23,4 +23,4 @@ for student in students:
     )
 
     # Debug Message
-    print(f"Sent: {message.body} to {student.phone_number}")
+    print(f"Sent: {message.body} to {student.phone_number}")'''
