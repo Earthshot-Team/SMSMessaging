@@ -5,12 +5,7 @@ from os.path import exists
 from csv import DictReader
 
 # External Scripts
-from components import Student
-
-student = Student('Nicolas', 'Gatien', '+13439985454')
-students = []
-
-global_variables = json.load(open('scripts\global_variables.json'))
+global_variables = json.load(open('data\global_variables.json'))
 
 def Build_Sheet_URL(doc_id, sheet_id):
     # Construct a Google Sheet URL so Pandas can Access Data
@@ -37,7 +32,7 @@ def Download_Student_Data():
 
 def Export_Student_Data_In_JSON():
     # Read Student Data
-    with open('scripts\data.csv', 'r') as read_obj:
+    with open('data\data.csv', 'r') as read_obj:
         data = DictReader(read_obj)
         
         # Loop through each row and create JSON file for student
@@ -91,19 +86,5 @@ def Create_JSON_File_For_Student(first_name, last_name, phone_number):
         print(f"📰 Create File For {first_name} {last_name}")
 
 # Script
-#Create_JSON_File_For_Student()
-Download_Student_Data()
-Export_Student_Data_In_JSON()
-
-# Up Module By 1
-'''file = open(path)
-python_dictionary = json.load(file)
-
-python_dictionary['module'] += 1
-
-student_json2 = json.dumps(python_dictionary)
-
-print(python_dictionary['module'])
-
-with open(path, 'w') as outfile:
-    outfile.write(student_json2)'''
+'''Download_Student_Data()
+Export_Student_Data_In_JSON()'''
