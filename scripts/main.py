@@ -5,7 +5,6 @@ import json
 
 # Other Scripts
 import keys.twilio_keys
-from components import Student
 import data_handler
 
 client = Client(keys.twilio_keys.account_sid, keys.twilio_keys.auth_token) # Twilio Client
