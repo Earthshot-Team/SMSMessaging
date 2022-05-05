@@ -1,3 +1,3 @@
 keys/twilio_keys.py
 keys/google_keys.json
-scripts/data.csv
+data/data.csv

@@ -30,7 +30,7 @@ def Download_Student_Data():
     
     # Use Pandas to read the sheet
     df = pd.read_csv(sheet_url)
-    file_path = 'scripts\data.csv' # Export Location
+    file_path = 'data\data.csv' # Export Location
 
     # Export Data
     Write_Dataframe_To_File(df, file_path)
@@ -57,7 +57,7 @@ def Increase_Number_Of_Students():
 
 def Create_JSON_File_For_Student(first_name, last_name, phone_number):
     # Initialize Path
-    path = f'students/{first_name}_{last_name}.json'
+    path = f'data/students/{first_name}_{last_name}.json'
 
     # Create a Dictionary With All Information
     student_dict = {
@@ -81,7 +81,7 @@ def Create_JSON_File_For_Student(first_name, last_name, phone_number):
         print(f"✅ {first_name} {last_name} Already Has a File")
     else:
         # Write JSON File in students folder, name the file after the student
-        with open(f'students/{first_name}_{last_name}.json', 'w') as outfile:
+        with open(f'data/students/{first_name}_{last_name}.json', 'w') as outfile:
             outfile.write(student_json)
         
         # Log Student Into Global Variables
