@@ -9,7 +9,6 @@ from components import Student
 
 student = Student('Nicolas', 'Gatien', '+13439985454')
 students = []
-path = f'students/{student.first_name}_{student.last_name}.json'
 
 global_variables = json.load(open('scripts\global_variables.json'))
 
@@ -19,7 +18,6 @@ def build_sheet_url(doc_id, sheet_id):
 def write_df_to_local(df, file_path):
     df.to_csv(file_path)
 
-
 def Turn_Student_Sheet_Into_Student_Array():
     doc_id = '1yI5kt3E-nkFA2-juvulEkFuWxpQ-BuFHURGqTunkc-E'
     sheet_id = '1090354940'
@@ -28,12 +26,13 @@ def Turn_Student_Sheet_Into_Student_Array():
     file_path = 'scripts\data.csv'
     write_df_to_local(df, file_path)
 
-        # open file in read mode
+    # open file in read mode
     # iterate over each line as a ordered dictionary and print only few column by column name
     with open('scripts\data.csv', 'r') as read_obj:
         csv_dict_reader = DictReader(read_obj)
         for row in csv_dict_reader:
-            students.append(Student(row["Student's First Name"], row["Student's Last Name"], row["Student's Phone Number"]))
+            print(row)
+            Create_JSON_File_For_Student(row["Student's First Name"], row["Student's Last Name"], row["Student's Phone Number"])
 
 def Increase_Number_Of_Students():
     # Increase Variable
@@ -46,13 +45,16 @@ def Increase_Number_Of_Students():
     with open('scripts\global_variables.json', 'w') as outfile:
         outfile.write(global_variables_json)
 
-def Create_JSON_File_For_Student():
+def Create_JSON_File_For_Student(first_name, last_name, phone_number):
+    path = f'students/{first_name}_{last_name}.json'
+
+
     # Create a Dictionary With All Information
     student_dict = {
         "ID": global_variables['number_of_students'],
-        "first_name": student.first_name,
-        "last_name": student.last_name,
-        "phone_number": student.phone_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "phone_number": phone_number,
         "region_code": "+41",
         "module": 1,
         "progress": 0
@@ -66,24 +68,24 @@ def Create_JSON_File_For_Student():
 
     if (file_exists):   
         # Debug     
-        print(f"✅ {student.first_name} {student.last_name} Already Has a File")
+        print(f"✅ {first_name} {last_name} Already Has a File")
     else:
         # Write JSON File in students folder, name the file after the student
-        with open(f'students/{student.first_name}_{student.last_name}.json', 'w') as outfile:
+        with open(f'students/{first_name}_{last_name}.json', 'w') as outfile:
             outfile.write(student_json)
         
         # Log Student Into Global Variables
         Increase_Number_Of_Students()
 
         # Debug
-        print(f"📰 Create File For {student.first_name} {student.last_name}")
+        print(f"📰 Create File For {first_name} {last_name}")
 
 # Script
-Create_JSON_File_For_Student()
+#Create_JSON_File_For_Student()
 Turn_Student_Sheet_Into_Student_Array()
 
 # Up Module By 1
-file = open(path)
+'''file = open(path)
 python_dictionary = json.load(file)
 
 python_dictionary['module'] += 1
@@ -93,4 +95,4 @@ student_json2 = json.dumps(python_dictionary)
 print(python_dictionary['module'])
 
 with open(path, 'w') as outfile:
-    outfile.write(student_json2)
+    outfile.write(student_json2)'''
