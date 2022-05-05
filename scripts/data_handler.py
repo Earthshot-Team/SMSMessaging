@@ -12,26 +12,36 @@ students = []
 
 global_variables = json.load(open('scripts\global_variables.json'))
 
-def build_sheet_url(doc_id, sheet_id):
+def Build_Sheet_URL(doc_id, sheet_id):
+    # Construct a Google Sheet URL so Pandas can Access Data
     return f'https://docs.google.com/spreadsheets/d/{doc_id}/export?format=csv&gid={sheet_id}'
 
-def write_df_to_local(df, file_path):
+def Write_Dataframe_To_File(df, file_path):
+    # Turn Dataframe to a CSV file
     df.to_csv(file_path)
 
-def Turn_Student_Sheet_Into_Student_Array():
+def Download_Student_Data():
+    # Pulled From The Google Sheet URL
     doc_id = '1yI5kt3E-nkFA2-juvulEkFuWxpQ-BuFHURGqTunkc-E'
     sheet_id = '1090354940'
-    sheet_url = build_sheet_url(doc_id, sheet_id)
-    df = pd.read_csv(sheet_url)
-    file_path = 'scripts\data.csv'
-    write_df_to_local(df, file_path)
 
-    # open file in read mode
-    # iterate over each line as a ordered dictionary and print only few column by column name
+    # Construct URL
+    sheet_url = Build_Sheet_URL(doc_id, sheet_id)
+    
+    # Use Pandas to read the sheet
+    df = pd.read_csv(sheet_url)
+    file_path = 'scripts\data.csv' # Export Location
+
+    # Export Data
+    Write_Dataframe_To_File(df, file_path)
+
+def Export_Student_Data_In_JSON():
+    # Read Student Data
     with open('scripts\data.csv', 'r') as read_obj:
-        csv_dict_reader = DictReader(read_obj)
-        for row in csv_dict_reader:
-            print(row)
+        data = DictReader(read_obj)
+        
+        # Loop through each row and create JSON file for student
+        for row in data:
             Create_JSON_File_For_Student(row["Student's First Name"], row["Student's Last Name"], row["Student's Phone Number"])
 
 def Increase_Number_Of_Students():
@@ -46,8 +56,8 @@ def Increase_Number_Of_Students():
         outfile.write(global_variables_json)
 
 def Create_JSON_File_For_Student(first_name, last_name, phone_number):
+    # Initialize Path
     path = f'students/{first_name}_{last_name}.json'
-
 
     # Create a Dictionary With All Information
     student_dict = {
@@ -82,7 +92,8 @@ def Create_JSON_File_For_Student(first_name, last_name, phone_number):
 
 # Script
 #Create_JSON_File_For_Student()
-Turn_Student_Sheet_Into_Student_Array()
+Download_Student_Data()
+Export_Student_Data_In_JSON()
 
 # Up Module By 1
 '''file = open(path)
