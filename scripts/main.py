@@ -9,14 +9,17 @@ from components import Student
 import data_handler
 
 client = Client(keys.twilio_keys.account_sid, keys.twilio_keys.auth_token) # Twilio Client
-directory = 'data\students' # Students Directory
+students = 'data\students' # Students Directory
 
+# Store Student Data Locally
 data_handler.Download_Student_Data()
 data_handler.Export_Student_Data_In_JSON()
 
-for filename in os.scandir(directory):
+# Loop Through Each Student In Student Directory
+for filename in os.scandir(students):
+    # Make sure the file still exists
     if filename.is_file():
-        file = json.load(open(filename.path))
+        file = json.load(open(filename.path)) # Reference the actual file instead of the file name
 
         # Construct Message
         message = client.messages.create(

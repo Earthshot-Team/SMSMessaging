@@ -104,7 +104,3 @@ def Create_JSON_File_For_Student(first_name, last_name, phone_number):
 
         # Debug
         print(f"📰 Create File For {first_name} {last_name}")
-
-# Script
-'''Download_Student_Data()
-Export_Student_Data_In_JSON()'''
