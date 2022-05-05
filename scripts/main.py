@@ -15,17 +15,17 @@ data_handler.Download_Student_Data()
 data_handler.Export_Student_Data_In_JSON()
 
 # Loop Through Each Student In Student Directory
-for filename in os.scandir(students):
+for file in os.scandir(students):
     # Make sure the file still exists
-    if filename.is_file():
-        file = json.load(open(filename.path)) # Reference the actual file instead of the file name
+    if file.is_file():
+        student = json.load(open(file.path)) # Reference the actual file instead of the file name
 
         # Construct Message
         message = client.messages.create(
-            body = f"Welcome, {file['first_name']}! This is your first lesson with 🧱 Foundations \n 🔗 Press This Link To Continue To Your First Lesson: https://www.youtube.com/watch?v=iik25wqIuFo",
+            body = f"Welcome, {student['first_name']}! This is your first lesson with 🧱 Foundations \n 🔗 Press This Link To Continue To Your First Lesson: https://youtu.be/h4FjjPneNw8",
             from_ = keys.twilio_keys.twilio_number,
-            to = file['phone_number']
+            to = student['phone_number']
         )
 
         # Debug Message
-        print(f"Sent: {message.body} to {file['phone_number']}")
+        print(f"Sent: {message.body} to {student['phone_number']}")

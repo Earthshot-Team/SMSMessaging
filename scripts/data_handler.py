@@ -8,25 +8,6 @@ import re
 # External Scripts
 global_variables = json.load(open('data\global_variables.json'))
 
-def Format_Phone_Number(phone_number):
-    # Examples
-    # +1 613 822 9592   ->   +16138229592
-    # +1 (613) 822 9592 ->   +16138229592
-    # (+1) 6138229592   ->   +16138229592
-    # +1-613-822-9592   ->   +16138229592
-
-    # Remove Uncessessary Spaces
-    formatted_number = re.sub(r"\s+", "", phone_number, flags=re.UNICODE)
-
-    # Add a + at Beginning
-    first_character = formatted_number[0]
-
-    if(first_character != '+'):
-        formatted_number = '+' + formatted_number
-
-    # Return Phone Number
-    return formatted_number
-
 def Build_Sheet_URL(doc_id, sheet_id):
     # Construct a Google Sheet URL so Pandas can Access Data
     return f'https://docs.google.com/spreadsheets/d/{doc_id}/export?format=csv&gid={sheet_id}'
@@ -69,6 +50,25 @@ def Increase_Number_Of_Students():
     # Modify The File
     with open('data\global_variables.json', 'w') as outfile:
         outfile.write(global_variables_json)
+
+def Format_Phone_Number(phone_number):
+    # Examples
+    # +1 613 822 9592   ->   +16138229592
+    # +1 (613) 822 9592 ->   +16138229592
+    # (+1) 6138229592   ->   +16138229592
+    # +1-613-822-9592   ->   +16138229592
+
+    # Remove Uncessessary Spaces
+    formatted_number = re.sub(r"\s+", "", phone_number, flags=re.UNICODE)
+
+    # Add a + at Beginning
+    first_character = formatted_number[0]
+
+    if(first_character != '+'):
+        formatted_number = '+' + formatted_number
+
+    # Return Phone Number
+    return formatted_number
 
 def Create_JSON_File_For_Student(first_name, last_name, phone_number):
     # Initialize Path
