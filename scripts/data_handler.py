@@ -25,11 +25,11 @@ def Download_Student_Data():
     sheet_url = Build_Sheet_URL(doc_id, sheet_id)
     
     # Use Pandas to read the sheet
-    df = pd.read_csv(sheet_url)
-    file_path = 'data\data.csv' # Export Location
+    dataframe = pd.read_csv(sheet_url)
+    export_path = 'data\data.csv' # Export Location
 
     # Export Data
-    Write_Dataframe_To_File(df, file_path)
+    Write_Dataframe_To_File(dataframe, export_path)
 
 def Export_Student_Data_In_JSON():
     # Read Student Data
