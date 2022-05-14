@@ -11,11 +11,9 @@ global_variables = json.load(open('data\global_variables.json'))
 def Build_Sheet_URL(doc_id, sheet_id):
     # Construct a Google Sheet URL so Pandas can Access Data
     return f'https://docs.google.com/spreadsheets/d/{doc_id}/export?format=csv&gid={sheet_id}'
-
 def Write_Dataframe_To_File(df, file_path):
     # Turn Dataframe to a CSV file
     df.to_csv(file_path)
-
 def Download_Student_Data():
     # Pulled From The Google Sheet URL
     doc_id = '1yI5kt3E-nkFA2-juvulEkFuWxpQ-BuFHURGqTunkc-E'
@@ -30,7 +28,6 @@ def Download_Student_Data():
 
     # Export Data
     Write_Dataframe_To_File(dataframe, export_path)
-
 def Export_Student_Data_In_JSON():
     # Read Student Data
     with open('data\data.csv', 'r') as read_obj:
@@ -39,7 +36,6 @@ def Export_Student_Data_In_JSON():
         # Loop through each row and create JSON file for student
         for row in data:
             Create_JSON_File_For_Student(row["Student's First Name"], row["Student's Last Name"], row["Student's Phone Number"])
-
 def Increase_Number_Of_Students():
     # Increase Variable
     global_variables['number_of_students'] += 1
@@ -50,7 +46,6 @@ def Increase_Number_Of_Students():
     # Modify The File
     with open('data\global_variables.json', 'w') as outfile:
         outfile.write(global_variables_json)
-
 def Format_Phone_Number(phone_number):
     # Examples
     # +1 613 822 9592   ->   +16138229592
@@ -69,7 +64,6 @@ def Format_Phone_Number(phone_number):
 
     # Return Phone Number
     return formatted_number
-
 def Create_JSON_File_For_Student(first_name, last_name, phone_number):
     # Initialize Path
     path = f'data/students/{first_name}_{last_name}.json'
